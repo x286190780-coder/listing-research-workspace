@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f9fd">
+  <meta name="description" content="Listing Research Workspace is an independent, early-stage project exploring responsible product research and listing organization using the Etsy Open API, subject to approval.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Listing Research Workspace | Independent Research Project">
+  <meta property="og:description" content="A private product research workspace in development. API integrations and analytics are subject to Etsy authorization.">
+  <title>Listing Research Workspace | Independent Research Project</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17233d;
+      --muted: #56657d;
+      --blue: #435bc5;
+      --blue-dark: #314ba9;
+      --purple: #7061b6;
+      --outline: #e4e9f4;
+      --paper: #ffffff;
+      --page: #f7f9fd;
+      --soft: #eff3fc;
+      --green: #2a795b;
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--page); font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.65; }
+    a { color: inherit; }
+    a:focus-visible, button:focus-visible { outline: 3px solid #98aafa; outline-offset: 4px; }
+    .wrap { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+    .site-header { background: rgba(255,255,255,.94); border-bottom: 1px solid var(--outline); }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 84px; }
+    .brand { display: inline-flex; align-items: center; gap: 13px; text-decoration: none; font-weight: 800; font-size: 17px; letter-spacing: -.04em; }
+    .brand-mark { display: grid; grid-template-columns: repeat(2, 12px); gap: 4px; transform: rotate(-12deg); }
+    .brand-mark i { display: block; width: 12px; height: 12px; border-radius: 4px; background: #566be0; }
+    .brand-mark i:nth-child(2) { background: #b6bdf5; }
+    .brand-mark i:nth-child(3) { background: #9dcbe7; }
+    .brand-mark i:nth-child(4) { background: #725ac1; }
+    .nav { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; }
+    .nav a { font-size: 13px; font-weight: 650; text-decoration: none; color: #56637b; }
+    .nav a:hover { color: var(--blue); }
+    .hero { position: relative; padding: 102px 0 88px; overflow: hidden; }
+    .hero::before { position: absolute; content: ""; width: 700px; height: 700px; right: -320px; top: -410px; border-radius: 50%; background: radial-gradient(circle, rgba(187,200,255,.45), rgba(187,200,255,0) 72%); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: 1.04fr .96fr; gap: 64px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: #4052b6; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .16em; }
+    .eyebrow::before { content: ""; width: 7px; height: 7px; background: #5269e3; border-radius: 50%; box-shadow: 0 0 0 5px #e5eaff; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(43px, 5.4vw, 69px); line-height: 1.095; letter-spacing: -.067em; font-weight: 780; margin: 23px 0 24px; max-width: 720px; }
+    h1 span { color: var(--blue); }
+    .lead { font-size: 17px; color: var(--muted); max-width: 570px; margin-bottom: 28px; }
+    .pills { display: flex; gap: 9px; flex-wrap: wrap; margin-bottom: 34px; }
+    .pill { display: inline-flex; border: 1px solid #e1e6f2; background: white; font-size: 11px; font-weight: 800; letter-spacing: .015em; border-radius: 30px; padding: 7px 13px; color: #52617b; }
+    .pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #d69b49; display: inline-block; margin: 6px 7px 0 0; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+    .btn { display: inline-flex; gap: 11px; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; padding: 14px 19px; text-decoration: none; border-radius: 12px; transition: transform .12s ease, background .12s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 10px 23px rgba(59,81,175,.17); }
+    .btn-primary:hover { background: var(--blue-dark); }
+    .btn-secondary { color: #354460; background: white; border: 1px solid var(--outline); }
+    .small-print { font-size: 12px; color: #79859a; max-width: 520px; }
+    .workspace { background: white; border-radius: 23px; box-shadow: 0 29px 72px rgba(50,66,117,.12), 0 2px 8px rgba(50,66,117,.03); border: 1px solid #e5e9f6; overflow: hidden; transform: rotate(1deg); }
+    .workspace-top { display: flex; justify-content: space-between; align-items: center; padding: 17px 22px; border-bottom: 1px solid var(--outline); }
+    .workspace-top strong { font-size: 12px; }
+    .window-dots { display: flex; gap: 5px; }
+    .window-dots i { width: 7px; height: 7px; background: #dce2f3; border-radius: 100%; }
+    .workspace-body { padding: 22px; }
+    .preview-label { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 16px; font-size: 11px; font-weight: 800; color: #7b87a0; text-transform: uppercase; letter-spacing: .075em; }
+    .preview-label em { font-size: 10px; font-style: normal; color: #8162ac; background: #f3effa; border-radius: 20px; padding: 4px 9px; letter-spacing: 0; text-transform: none; }
+    .sample-card { border: 1px solid #e8ecf5; background: #fbfcff; border-radius: 14px; padding: 15px; display: flex; gap: 15px; align-items: center; margin-bottom: 15px; }
+    .sample-thumb { height: 84px; width: 86px; flex: 0 0 86px; background: #e9eefb; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .sample-thumb svg { width: 58px; height: 58px; }
+    .sample-card p { margin-bottom: 3px; color: #8190a9; font-size: 11px; }
+    .sample-card h3 { margin-bottom: 3px; font-size: 15px; line-height: 1.35; letter-spacing: -.03em; }
+    .sample-card .meta { font-size: 11px; color: #7c89a2; }
+    .card-heading { font-size: 11px; font-weight: 800; color: #51617d; margin-bottom: 9px; }
+    .tags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .tag { border: 1px solid #dee6f7; background: #f2f5fd; color: #5f68a6; border-radius: 8px; padding: 6px 9px; font-size: 10px; font-weight: 700; }
+    .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+    .status-item { border: 1px solid #edf0f8; padding: 13px; border-radius: 11px; }
+    .status-item span { color: #7b88a1; font-size: 10px; display: block; margin-bottom: 5px; }
+    .status-item strong { font-size: 11px; color: #3f506b; }
+    .preview-foot { padding: 12px 20px; background: #fafaff; border-top: 1px solid #edf0f9; font-size: 10px; color: #8c93a6; }
+    .section { padding: 83px 0; }
+    .section.alternate { background: #ffffff; border-top: 1px solid #ecf0f8; border-bottom: 1px solid #ecf0f8; }
+    .kicker { font-size: 11px; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: .145em; margin-bottom: 12px; }
+    .section h2 { font-size: clamp(28px, 3vw, 39px); letter-spacing: -.052em; line-height: 1.2; margin-bottom: 15px; }
+    .section-intro { max-width: 740px; color: var(--muted); font-size: 15px; }
+    .features { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px; margin-top: 38px; }
+    .feature { border: 1px solid var(--outline); background: #fff; border-radius: 17px; padding: 25px 23px 22px; min-height: 207px; }
+    .feature-icon { width: 39px; height: 39px; display: grid; place-items: center; background: #eef1ff; color: #5064c6; font-size: 19px; border-radius: 12px; margin-bottom: 20px; font-weight: 900; }
+    .feature h3 { font-size: 15px; margin-bottom: 8px; letter-spacing: -.025em; }
+    .feature p { color: var(--muted); font-size: 12.5px; margin: 0; }
+    .cols { display: grid; grid-template-columns: .83fr 1.17fr; gap: 70px; align-items: start; }
+    .timeline { display: grid; gap: 10px; }
+    .milestone { display: flex; gap: 16px; padding: 17px 20px; border: 1px solid #e6ebf5; border-radius: 15px; background: #fff; }
+    .step { flex: 0 0 32px; width: 32px; height: 32px; border: 1px solid #dbe3f8; border-radius: 10px; background: #f1f4fc; display: grid; place-items: center; color: #5f6d9b; font-size: 11px; font-weight: 800; }
+    .milestone h3 { font-size: 13px; margin-bottom: 3px; }
+    .milestone p { color: var(--muted); font-size: 12px; margin: 0; }
+    .detail-card { background: #fff; border: 1px solid var(--outline); border-radius: 18px; padding: 27px 30px; margin-top: 22px; }
+    .detail-card h3 { margin-bottom: 10px; font-size: 15px; }
+    .detail-card p, .detail-card li { color: var(--muted); font-size: 13px; }
+    .detail-card p:last-child { margin-bottom: 0; }
+    .detail-card ul { padding-left: 20px; margin-bottom: 0; }
+    .note { border-left: 3px solid #6472d4; background: #f3f5fe; padding: 17px 21px; border-radius: 0 13px 13px 0; color: #425170; font-size: 13px; margin-top: 24px; }
+    .legal { font-size: 12px; color: #69778f; background: #f6f8fe; border: 1px solid #e3e8f5; padding: 20px 22px; border-radius: 15px; margin-top: 28px; }
+    .legal strong { color: #33415c; }
+    .contact-line { margin-top: 17px; font-size: 13px; color: var(--muted); }
+    .contact-line a { color: var(--blue-dark); text-underline-offset: 3px; }
+    .footer { padding: 35px 0 42px; background: #f5f7fb; border-top: 1px solid var(--outline); }
+    .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+    .footer small { color: #7c879d; font-size: 11px; }
+    .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+    .footer-links a { color: #60708a; font-size: 11px; text-decoration: none; font-weight: 700; }
+    @media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } .workspace { max-width: 620px; transform: none; } .features { grid-template-columns: repeat(2, minmax(0,1fr)); } .cols { grid-template-columns: 1fr; gap: 28px; } }
+    @media (max-width: 600px) { .wrap { width: min(100% - 34px, 1160px); } .header-inner { padding: 18px 0; min-height: auto; align-items: flex-start; flex-direction: column; gap: 14px; } .nav { gap: 18px; } .nav a { font-size: 11px; } .hero { padding: 64px 0; } h1 { font-size: 46px; } .lead { font-size: 15px; } .section { padding: 60px 0; } .features { grid-template-columns: 1fr; margin-top: 28px; } .feature { min-height: auto; } .workspace-body { padding: 15px; } .sample-card { gap: 12px; padding: 12px; } .sample-thumb { width: 66px; height: 73px; flex-basis: 66px; } .sample-thumb svg { width: 43px; } .status-grid { gap: 7px; } .status-item { padding: 11px; } .detail-card { padding: 21px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="Listing Research Workspace home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Listing Research<br>Workspace</span></a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#compliance">Compliance</a>
+      </nav>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero" id="about">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Independent developer project</div>
+          <h1>Product research,<br><span>better organized.</span></h1>
+          <p class="lead">Listing Research Workspace is an early-stage, private research tool concept for sellers who want to organize publicly available product listings, review listing keywords and compare research notes through permitted API access.</p>
+          <div class="pills" aria-label="Project status"><span class="pill"><span class="dot" aria-hidden="true"></span>In development</span><span class="pill">Personal use initially</span><span class="pill">API approval pending</span></div>
+          <div class="actions"><a class="btn btn-primary" href="#features">Explore the project <span aria-hidden="true">&#8594;</span></a><a class="btn btn-secondary" href="#compliance">Review API approach</a></div>
+          <p class="small-print">This is an informational website for a proposed tool. No public application, registration, or live Etsy data feed is available here.</p>
+        </div>
+        <div class="workspace" role="img" aria-label="Illustrative concept of a private listing research dashboard. This is a nonfunctional mockup with fictional data.">
+          <div class="workspace-top"><strong>Research overview</strong><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div></div>
+          <div class="workspace-body">
+            <div class="preview-label"><span>Saved research item</span><em>Concept preview</em></div>
+            <div class="sample-card"><div class="sample-thumb" aria-hidden="true"><svg viewBox="0 0 80 80" fill="none"><rect x="12" y="12" width="56" height="56" rx="7" fill="#cdd8f0" stroke="#9eafd2" stroke-width="4"/><rect x="21" y="21" width="38" height="38" rx="2" fill="#fff"/><circle cx="40" cy="31" r="6" fill="#a5b4dc"/><path d="m25 52 11-11 7 7 6-6 7 10" stroke="#91a6d1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><p>Illustrative listing / not actual inventory</p><h3>Example handmade home item</h3><div class="meta">Listing metadata and notes (proposed)</div></div></div>
+            <div class="card-heading">Example tag categories</div>
+            <div class="tags"><span class="tag">handmade</span><span class="tag">home decor</span><span class="tag">personalized gift</span><span class="tag">research notes</span></div>
+            <div class="status-grid"><div class="status-item"><span>API data access</span><strong>Subject to approval</strong></div><div class="status-item"><span>Research workspace</span><strong>Private by design</strong></div></div>
+          </div>
+          <div class="preview-foot">Illustration only. Tags and details above are fictional examples, not extracted Etsy listing data.</div>
+        </div>
+      </div>
+    </section>
+    <section class="section alternate" id="features">
+      <div class="wrap"><div class="kicker">What we are building</div><h2>A focused toolkit for independent research.</h2><p class="section-intro">The planned application organizes permitted public listing information in one workspace. Features described below are proposals, not claims of a launched or Etsy-approved service.</p>
+        <div class="features">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">01</div><h3>Listing bookmarks</h3><p>Save research references and record listing identifiers, titles, prices and user-written notes where permitted.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">02</div><h3>Tag and keyword review</h3><p>Review tags returned by approved Etsy Open API endpoints, and distinguish source data from suggested keywords.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">03</div><h3>Product organization</h3><p>Organize items with categories, research status, private annotations and comparison views.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">04</div><h3>Shop research</h3><p>Explore public shop and listing metadata within the scope of approved access and Etsy's applicable data policies.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">05</div><h3>Export and restoration</h3><p>Plan user-controlled backups for original research notes and permitted records, with backup before local upgrades.</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">06</div><h3>Optional browser interface</h3><p>A companion browser extension is proposed only if Etsy provides the express written authorization required for it.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="roadmap"><div class="wrap cols"><div><div class="kicker">Current stage</div><h2>A responsible development process.</h2><p class="section-intro">We are starting with the project description and access review. The research application will not enable API-based analytics or browser access outside Etsy's approved permissions.</p></div><div class="timeline"><div class="milestone"><div class="step">01</div><div><h3>Project overview and developer registration</h3><p>Describe the intended functionality, users, and data handling accurately.</p></div></div><div class="milestone"><div class="step">02</div><div><h3>API access and written permissions</h3><p>Request the appropriate API access and express written authorization for extension-based access or analytics when applicable.</p></div></div><div class="milestone"><div class="step">03</div><div><h3>Controlled integration and testing</h3><p>Implement only the allowed API endpoints, credential safeguards, rate limits, and appropriate content refresh policies.</p></div></div><div class="milestone"><div class="step">04</div><div><h3>Private workspace and optional extension</h3><p>Make approved features available to the intended users only after review and testing.</p></div></div></div></div></section>
+    <section class="section alternate" id="privacy"><div class="wrap"><div class="kicker">Transparency</div><h2>Privacy and intended data use.</h2><p class="section-intro">This section describes the current informational website and the data handling approach planned for the application. It will be updated before any application launch.</p><div class="detail-card"><h3>This website, today</h3><p>This static website does not provide accounts, a login, a contact form, or a live application. It does not set first-party cookies or use embedded tracking or advertising scripts. GitHub Pages, as the hosting provider, may process technical connection information and IP addresses for its operations and security.</p></div><div class="detail-card"><h3>Planned application data, if approved</h3><ul><li><strong>Intended scope:</strong> permitted public listing IDs, titles, listing tags, prices and shop references from official API endpoints, plus the operator's own notes and organization labels.</li><li><strong>Not intended:</strong> buyers' private details, Etsy passwords, payment data, or private order information.</li><li><strong>Security:</strong> keep API secrets off distributed client software; use appropriately secured server-side access when needed.</li><li><strong>Retention:</strong> collect only necessary data, follow applicable Etsy API caching, display freshness and retention requirements, and enable removal of locally saved personal research records.</li><li><strong>Sharing:</strong> no sale or redistribution of Etsy member content is planned.</li></ul></div><p class="contact-line"><strong>Developer contact:</strong> <span id="contactInfo">Available via the public GitHub project owner profile after publication.</span></p></div></section>
+    <section class="section" id="compliance"><div class="wrap"><div class="kicker">Independent and permission-first</div><h2>Working within Etsy's API policies.</h2><p class="section-intro">The project intends to use Etsy's official Open API only under the access scope and conditions granted by Etsy. It will not rely on unauthorized scraping or data feeds.</p><div class="note"><strong>Permission requirement:</strong> Browser extensions accessing or analyzing Etsy data, and API access for analytics, require Etsy's express written authorization under the Etsy API Terms of Use. These capabilities are not enabled by this informational website and will not be launched without the necessary authorization.</div><div class="legal"><strong>Trademark and independence notice</strong><br>The term 'Etsy' is a trademark of Etsy, Inc. This application uses the Etsy API but is not endorsed or certified by Etsy, Inc.<br><br><span>API integration is proposed and subject to approval; this informational page itself does not access Etsy API data. Listing Research Workspace is independently developed and operated, and is not affiliated with Etsy, Inc.</span></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap footer-inner"><div class="brand" style="font-size:13px"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Listing Research Workspace</span></div><div class="footer-links"><a href="#about">Overview</a><a href="#privacy">Privacy</a><a href="#compliance">API compliance</a><a href="https://developer.etsy.com/documentation/" target="_blank" rel="noopener noreferrer">API documentation</a></div><small>Independent project concept. Not affiliated with Etsy, Inc.</small></div></footer>
+  <script>
+    (function () {
+      var match = window.location.hostname.match(/^([a-zA-Z0-9-]+)\.github\.io$/);
+      var contact = document.getElementById('contactInfo');
+      if (match && contact) {
+        var link = document.createElement('a');
+        link.href = 'https://github.com/' + encodeURIComponent(match[1]);
+        link.rel = 'noopener noreferrer';
+        link.target = '_blank';
+        link.textContent = 'Contact the project owner through GitHub (' + match[1] + ')';
+        contact.textContent = '';
+        contact.appendChild(link);
+      }
+    })();
+  </script>
+</body>
+</html>
